@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "firstdf27"
 		},
+		"AzureDataLakeDelLinkedService_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
@@ -13,6 +16,9 @@
 		},
 		"targetlinkedservice_password": {
 			"value": ""
+		},
+		"AzureDataLakeDelLinkedService_properties_typeProperties_url": {
+			"value": "https://storagebrowse2701.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storagebrowse2701.dfs.core.windows.net/"
