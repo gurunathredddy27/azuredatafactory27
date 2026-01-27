@@ -11,9 +11,41 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"targetlinkedservice_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'targetlinkedservice'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storagebrowse2701.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sqldatabase27.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldatabase"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin27"
+		},
+		"targetlinkedservice_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sqldatabase27.database.windows.net"
+		},
+		"targetlinkedservice_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldatabase"
+		},
+		"targetlinkedservice_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin27"
 		},
 		"containerUri": {
 			"type": "string",
@@ -45,8 +77,32 @@
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					},
+					"AzureSqlDatabase1_password": {
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"targetlinkedservice_password": {
+						"value": "[parameters('targetlinkedservice_password')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"targetlinkedservice_properties_typeProperties_server": {
+						"value": "[parameters('targetlinkedservice_properties_typeProperties_server')]"
+					},
+					"targetlinkedservice_properties_typeProperties_database": {
+						"value": "[parameters('targetlinkedservice_properties_typeProperties_database')]"
+					},
+					"targetlinkedservice_properties_typeProperties_userName": {
+						"value": "[parameters('targetlinkedservice_properties_typeProperties_userName')]"
 					}
 				}
 			},
