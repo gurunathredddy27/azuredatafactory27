@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "tips.csv",
-				"fileSystem": "source"
+				"folderPath": "csvfiles",
+				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
