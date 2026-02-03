@@ -43,6 +43,10 @@
 			"type": "string",
 			"defaultValue": "admin27"
 		},
+		"Http_link_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com"
+		},
 		"targetlinkedservice_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "sqldatabase27.database.windows.net"
@@ -109,6 +113,9 @@
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
 					},
+					"Http_link_properties_typeProperties_url": {
+						"value": "[parameters('Http_link_properties_typeProperties_url')]"
+					},
 					"targetlinkedservice_properties_typeProperties_server": {
 						"value": "[parameters('targetlinkedservice_properties_typeProperties_server')]"
 					},
@@ -121,6 +128,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "firstdf27_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'firstdf27_ArmTemplate_0')]"
+			]
 		}
 	]
 }
