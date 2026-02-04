@@ -1,0 +1,56 @@
+{
+	"name": "transform csv",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataflow_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceCSV"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "selectcolu"
+				},
+				{
+					"name": "filterRows"
+				},
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {First Name} as string,",
+				"          Gender as string,",
+				"          {Start Date} as date,",
+				"          {Last Login Time} as string,",
+				"          Salary as integer,",
+				"          {Bonus %} as double,",
+				"          {Senior Management} as boolean,",
+				"          Team as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceCSV",
+				"sourceCSV select(mapColumn(",
+				"          {First Name},",
+				"          Gender,",
+				"          Salary,",
+				"          {Senior Management},",
+				"          Team",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectcolu",
+				"selectcolu filter(Salary > 25000) ~> filterRows",
+				"filterRows split( Team == 'Engineering',",
+				"     disjoint: false) ~> split1@(Engineering, OtherThanEngg)"
+			]
+		}
+	}
+}
