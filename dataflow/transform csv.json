@@ -12,7 +12,15 @@
 					"name": "sourceCSV"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataflow_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "selectcolu"
@@ -22,6 +30,15 @@
 				},
 				{
 					"name": "split1"
+				},
+				{
+					"name": "removednull"
+				},
+				{
+					"name": "aggregate"
+				},
+				{
+					"name": "aggregateEngg"
 				}
 			],
 			"scriptLines": [
@@ -48,8 +65,22 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectcolu",
 				"selectcolu filter(Salary > 25000) ~> filterRows",
-				"filterRows split( Team == 'Engineering',",
-				"     disjoint: false) ~> split1@(Engineering, OtherThanEngg)"
+				"removednull split(Team == 'Engineering',",
+				"     Team == 'Sales',",
+				"     disjoint: false) ~> split1@(Engineering, Sales, OtherThanEngg)",
+				"filterRows derive(Gender = coalesce(Gender, 'N/A'),",
+				"          {First Name} = coalesce({First Name}, 'N/A')) ~> removednull",
+				"split1@OtherThanEngg aggregate(groupBy(Team),",
+				"     Salary = max(Salary)) ~> aggregate",
+				"split1@Engineering aggregate(groupBy(Team),",
+				"     Salary = min(Salary)) ~> aggregateEngg",
+				"aggregate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
