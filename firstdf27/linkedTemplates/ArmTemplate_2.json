@@ -346,6 +346,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "data transform",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -353,7 +360,7 @@
 					"recurrence": {
 						"frequency": "Hour",
 						"interval": 2,
-						"startTime": "2026-02-04T13:48:00",
+						"startTime": "2026-02-04T13:55:00",
 						"endTime": "2026-02-05T08:14:00",
 						"timeZone": "India Standard Time"
 					}
