@@ -1,0 +1,20 @@
+{
+	"name": "ParquetDataflow",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeDelLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "DataFlow2",
+				"fileSystem": "reporting"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
