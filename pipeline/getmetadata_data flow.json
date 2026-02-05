@@ -1,5 +1,5 @@
 {
-	"name": "getmetadata",
+	"name": "getmetadata_data flow",
 	"properties": {
 		"activities": [
 			{
@@ -27,6 +27,7 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
+						"modifiedDatetimeEnd": "2026-02-28T10:00:00.000Z",
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

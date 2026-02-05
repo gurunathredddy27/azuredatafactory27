@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "getmetadata",
+					"referenceName": "getmetadata_data flow",
 					"type": "PipelineReference"
 				}
 			},
