@@ -596,7 +596,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/getmetadata')]",
+			"name": "[concat(parameters('factoryName'), '/getmetadata_data flow')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -627,6 +627,7 @@
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
 								"recursive": true,
+								"modifiedDatetimeEnd": "2026-02-28T10:00:00.000Z",
 								"enablePartitionDiscovery": false
 							},
 							"formatSettings": {
@@ -2479,7 +2480,7 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "getmetadata",
+							"referenceName": "getmetadata_data flow",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -2504,7 +2505,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/getmetadata')]",
+				"[concat(variables('factoryId'), '/pipelines/getmetadata_data flow')]",
 				"[concat(variables('factoryId'), '/pipelines/data transform')]"
 			]
 		},
