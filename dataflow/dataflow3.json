@@ -1,0 +1,73 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dataflow3",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataflow3_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "aggregate2"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Film as string,",
+				"          Year as short,",
+				"          Actor as string,",
+				"          Director as string,",
+				"          {Box Office} as double,",
+				"          Budget as double,",
+				"          {Bond Actor Salary} as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 split(Year >= 2000,",
+				"     Year < 1999,",
+				"     disjoint: false) ~> split1@(yearAbove2000, YearBelow2000)",
+				"split1@yearAbove2000 aggregate(groupBy(Actor),",
+				"     {Box Office} = sum({Box Office}),",
+				"          Budget = sum(Budget),",
+				"          {Bond Actor Salary} = sum({Bond Actor Salary})) ~> aggregate1",
+				"derivedColumn1 aggregate(groupBy(Actor),",
+				"     {Box Office} = sum({Box Office}),",
+				"          Budget = sum(Budget),",
+				"          {Bond Actor Salary} = round(sum({Bond Actor Salary}),2)) ~> aggregate2",
+				"split1@YearBelow2000 derive({Bond Actor Salary} = coalesce({Bond Actor Salary}, 0)) ~> derivedColumn1",
+				"aggregate2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}
