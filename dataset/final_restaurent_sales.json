@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "final_sales_week1and2",
-				"folderPath": "csvfiles",
+				"folderPath": "dataflow4",
 				"fileSystem": "reporting"
 			}
 		},
