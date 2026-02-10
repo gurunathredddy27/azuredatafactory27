@@ -1,0 +1,20 @@
+{
+	"name": "final_restaurent_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeDelLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "final_sales_week1and2",
+				"folderPath": "csvfiles",
+				"fileSystem": "reporting"
+			}
+		},
+		"schema": {}
+	}
+}
