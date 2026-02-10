@@ -2021,6 +2021,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText17')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeDelLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "ipl_dataset.csv",
+						"fileSystem": "source"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeDelLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2263,6 +2291,30 @@
 					}
 				},
 				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeDelLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Orc1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeDelLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Orc",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "dataflow5",
+						"fileSystem": "reporting"
+					},
+					"enablePhysicalSchema": true
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeDelLinkedService')]"
@@ -3072,6 +3124,92 @@
 				"[concat(variables('factoryId'), '/datasets/restaurent1')]",
 				"[concat(variables('factoryId'), '/datasets/restaurent2')]",
 				"[concat(variables('factoryId'), '/datasets/final_restaurent_sales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow5_ipl')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText17",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Orc1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          season as string,",
+						"          city as string,",
+						"          date as date,",
+						"          match_type as string,",
+						"          player_of_match as string,",
+						"          venue as string,",
+						"          team1 as string,",
+						"          team2 as string,",
+						"          toss_winner as string,",
+						"          toss_decision as string,",
+						"          winner as string,",
+						"          result as string,",
+						"          result_margin as string,",
+						"          target_runs as string,",
+						"          target_overs as string,",
+						"          super_over as boolean,",
+						"          method as string,",
+						"          umpire1 as string,",
+						"          umpire2 as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 select(mapColumn(",
+						"          id,",
+						"          season,",
+						"          city,",
+						"          team1,",
+						"          team2,",
+						"          winner,",
+						"          target_runs",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 filter(lesser(100, 200)) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText17')]",
+				"[concat(variables('factoryId'), '/datasets/Orc1')]"
 			]
 		},
 		{
