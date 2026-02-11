@@ -1373,7 +1373,7 @@
 							"name": "select1"
 						},
 						{
-							"name": "filter1"
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -1413,8 +1413,9 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 filter(lesser(100, 200)) ~> filter1",
-						"filter1 sink(allowSchemaDrift: true,",
+						"select1 aggregate(groupBy(winner),",
+						"     target_runs = max( target_runs)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     umask: 0022,",
 						"     preCommands: [],",
